@@ -68,6 +68,20 @@ const GATHER_ACTIONS = [
 
 const CRAFT_ITEMS = [
     {
+        id: "primitiveWorkbench",
+        name: "Примітивний верстак",
+        description: "Складає найпростіше спорядження з дерева та волокон.",
+        requires: { wood: 10, fiber: 6 },
+        imageKey: "primitiveWorkbench"
+    },
+    {
+        id: "primitiveFirepit",
+        name: "Примітивне вогнище",
+        description: "Проста вогняна яма для приготування їжі та зігрівання.",
+        requires: { wood: 8, stone: 4 },
+        imageKey: "primitiveFirepit"
+    },
+    {
         id: "campfireStation",
         name: "Вогнище виживальника",
         description: "Стаціонарне вогнище для готування здобичі та обігріву бази.",
@@ -139,6 +153,11 @@ async function init() {
     renderJournal();
     if (!state.journal.length) {
         logEvent("Ви прокидаєтесь на базі виживальника.", "info");
+        logEvent(
+            "Підготуйте табір: побудуйте примітивний верстак і примітивне вогнище, щоб вирушити на полювання.",
+            "info"
+        );
+        logEvent("Як тільки будете готові, переходьте до біому «Туманний ліс».", "info");
     }
     attachControlHandlers();
     startEnergyLoop();
