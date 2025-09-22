@@ -32,37 +32,55 @@
                 <span id="healthValue" class="stat-value">100 / 100</span>
             </div>
             <div class="stat-block energy-block">
-                <div class="stat-label">Енергія</div>
+                <div class="energy-header">
+                    <span class="stat-label">Енергія</span>
+                    <span id="energyTotal" class="stat-value">0 / 0</span>
+                </div>
                 <div class="energy-bar" aria-label="Сегменти енергії">
-                    <div class="energy-segment slow" data-segment="slow">
-                        <span class="segment-label">Повільне відновлення</span>
-                        <div class="segment-track">
-                            <div class="segment-fill"></div>
+                    <div class="energy-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0">
+                        <div class="energy-chunk slow" data-segment="slow">
+                            <div class="chunk-fill"></div>
                         </div>
-                        <span class="segment-value">0 / 0</span>
-                    </div>
-                    <div class="energy-segment medium" data-segment="medium">
-                        <span class="segment-label">Середнє відновлення</span>
-                        <div class="segment-track">
-                            <div class="segment-fill"></div>
+                        <div class="energy-chunk medium" data-segment="medium">
+                            <div class="chunk-fill"></div>
                         </div>
-                        <span class="segment-value">0 / 0</span>
-                    </div>
-                    <div class="energy-segment fast" data-segment="fast">
-                        <span class="segment-label">Швидке відновлення</span>
-                        <div class="segment-track">
-                            <div class="segment-fill"></div>
+                        <div class="energy-chunk fast" data-segment="fast">
+                            <div class="chunk-fill"></div>
                         </div>
-                        <span class="segment-value">0 / 0</span>
                     </div>
+                    <ul class="energy-legend">
+                        <li data-segment="slow">
+                            <span class="legend-dot"></span>
+                            <span class="legend-label">Повільне відновлення</span>
+                            <span class="legend-value">0 / 0</span>
+                        </li>
+                        <li data-segment="medium">
+                            <span class="legend-dot"></span>
+                            <span class="legend-label">Середнє відновлення</span>
+                            <span class="legend-value">0 / 0</span>
+                        </li>
+                        <li data-segment="fast">
+                            <span class="legend-dot"></span>
+                            <span class="legend-label">Швидке відновлення</span>
+                            <span class="legend-value">0 / 0</span>
+                        </li>
+                    </ul>
                 </div>
                 <p class="energy-hint">Витрати енергії спочатку використовують швидкий сегмент, потім середній та повільний.</p>
             </div>
         </section>
 
+        <section class="panel journal-panel">
+            <h2>Журнал подій</h2>
+            <p class="panel-intro">Фіксує наслідки дій, знайдені ресурси та випадкові ситуації у мандрівках.</p>
+            <ul class="journal-list" id="journalList">
+                <!-- Заповнюється скриптом -->
+            </ul>
+        </section>
+
         <section class="panel actions-panel">
-            <h2>Збір ресурсів</h2>
-            <p class="panel-intro">Обирай дію, витрачай енергію та чекай на завершення прогрес-бару.</p>
+            <h2>Польові дії</h2>
+            <p class="panel-intro">На базі можна готуватися, а для видобутку ресурсу вирушай у лісові хащі.</p>
             <div class="action-grid" id="gatherActions">
                 <!-- Карти дій додаються скриптом -->
             </div>
@@ -77,20 +95,20 @@
 
         <section class="panel biome-panel">
             <h2>Біоми</h2>
-            <p class="panel-intro">Поки доступна лише стартова зона. Інші біоми - заглушки для майбутніх розділів.</p>
+            <p class="panel-intro">Почни з бази та вирушай до лісу, щоб знаходити ресурси та переживати випадкові події.</p>
             <div class="biome-grid" id="biomeGrid">
                 <!-- Біоми додаються скриптом -->
             </div>
         </section>
 
         <section class="panel craft-panel">
-            <h2>Базовий крафт</h2>
-            <p class="panel-intro">Створи інструменти з дерева, каменю та волокон, щоб отримувати більше ресурсів у майбутньому.</p>
+            <h2>Робочі станції</h2>
+            <p class="panel-intro" id="craftIntro">Будівництво станцій відбувається на базі. Вироби допоможуть у подальших експедиціях.</p>
             <div class="craft-grid" id="craftGrid">
                 <!-- Список предметів додається скриптом -->
             </div>
             <div class="inventory" id="inventory">
-                <h3>Інвентар інструментів</h3>
+                <h3>Побудовані станції</h3>
                 <ul class="inventory-list" id="inventoryList">
                     <!-- Заповнюється скриптом -->
                 </ul>
