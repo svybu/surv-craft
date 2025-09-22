@@ -4,8 +4,13 @@ const AUTO_SAVE_INTERVAL = 30000;
 const RESOURCE_DEFS = {
     wood: { label: "Деревина", iconKey: "woodResource" },
     stone: { label: "Камінь", iconKey: "stoneResource" },
-    fiber: { label: "Волокно", iconKey: "fiberResource" }
+    fiber: { label: "Волокно", iconKey: "fiberResource" },
+    meat: { label: "М'ясо", iconKey: "meatResource" }
 };
+
+const JOURNAL_ENTRY_LIMIT = 40;
+const ENERGY_SEGMENT_KEYS = ["slow", "medium", "fast"];
+const ENERGY_SPEND_ORDER = ["fast", "medium", "slow"];
 
 const ENERGY_SEGMENTS = {
     slow: {
@@ -27,90 +32,90 @@ const ENERGY_SEGMENTS = {
 
 const GATHER_ACTIONS = [
     {
-        id: "gatherWood",
-        name: "Збір деревини",
-        description: "Збирай сухі гілки та колоди поруч із табором.",
+        id: "forestWood",
+        name: "Пошук деревини",
+        description: "Обирай здорові дерева та збирай придатні для будівництва колоди.",
         resource: "wood",
-        amount: 6,
-        duration: 4500,
-        energyCost: 24,
-        biome: "safe",
-        imageKey: "gatherWood"
-    },
-    {
-        id: "gatherStone",
-        name: "Пошук каменю",
-        description: "Повільно збирай валуни та уламки порід на галявині.",
-        resource: "stone",
-        amount: 4,
+        amount: 7,
         duration: 5200,
-        energyCost: 28,
-        biome: "safe",
-        imageKey: "gatherStone"
+        energyCost: 22,
+        biome: "forest",
+        imageKey: "forestWood"
     },
     {
-        id: "gatherFiber",
-        name: "Заготівля волокон",
-        description: "Збирай рослинні волокна з кущів поблизу табору.",
-        resource: "fiber",
-        amount: 5,
-        duration: 3800,
-        energyCost: 18,
-        biome: "safe",
-        imageKey: "gatherFiber"
+        id: "forestStone",
+        name: "Пошук каменю",
+        description: "Малоефективний збір уламків між корінням та валунами.",
+        resource: "stone",
+        amount: 2,
+        duration: 6600,
+        energyCost: 26,
+        biome: "forest",
+        imageKey: "forestStone"
+    },
+    {
+        id: "forestHunt",
+        name: "Полювання",
+        description: "Відстежуй здобич у хащах. Є ризик натрапити на агресивних хижаків.",
+        resource: "meat",
+        amount: 2,
+        duration: 6800,
+        energyCost: 30,
+        biome: "forest",
+        imageKey: "forestHunt"
     }
 ];
 
 const CRAFT_ITEMS = [
     {
-        id: "woodenClub",
-        name: "Дерев'яна палиця",
-        description: "Легка зброя та багатофункціональний інструмент.",
-        requires: { wood: 12, fiber: 4 },
-        imageKey: "woodenClub"
+        id: "campfireStation",
+        name: "Вогнище виживальника",
+        description: "Стаціонарне вогнище для готування здобичі та обігріву бази.",
+        requires: { wood: 12, stone: 4 },
+        imageKey: "campfireStation"
     },
     {
-        id: "stoneHatchet",
-        name: "Кам'яна сокира",
-        description: "Дозволяє ефективніше рубати дерева у майбутніх оновленнях.",
-        requires: { wood: 8, stone: 6, fiber: 4 },
-        imageKey: "stoneHatchet"
+        id: "carpenterBench",
+        name: "Верстак теслі",
+        description: "Базова майстерня для підготовки матеріалів та ремонту спорядження.",
+        requires: { wood: 16, fiber: 6, stone: 2 },
+        imageKey: "carpenterBench"
     },
     {
-        id: "fiberSling",
-        name: "Волоконна праща",
-        description: "Простий дальній інструмент для захисту табору.",
-        requires: { fiber: 12, stone: 3 },
-        imageKey: "fiberSling"
+        id: "hunterRack",
+        name: "Мисливська стійка",
+        description: "Сушить м'ясо та шкури після вилазок до лісу.",
+        requires: { wood: 10, fiber: 8, meat: 2 },
+        imageKey: "hunterRack"
     }
 ];
 
 const BIOMES = [
     {
-        id: "safe",
-        name: "Затишна долина",
-        description: "Безпечна зона для відновлення сил та базового збирання ресурсів.",
-        status: "Доступний",
-        risk: "Ризик: низький",
-        imageKey: "biomeSafe",
+        id: "base",
+        name: "База виживальника",
+        description: "Домівка з укріпленими укриттями та місцем для робочих станцій.",
+        status: "Домівка",
+        risk: "Ризик: відсутній",
+        imageKey: "biomeBase",
         unlocked: true
     },
     {
-        id: "mistForest",
+        id: "forest",
         name: "Туманний ліс",
-        description: "Заглушка: небезпечні хащі, де можна віднайти рідкісні рослини.",
-        status: "Незабаром",
+        description: "Густі зарості з деревиною, каменем і небезпекою полювання.",
+        status: "Доступний",
         risk: "Ризик: середній",
         imageKey: "biomeForest",
-        unlocked: false
+        unlocked: true
     },
     {
-        id: "basaltCliffs",
-        name: "Базальтові урвища",
-        description: "Заглушка: круті скелі з багатими покладами мінералів.",
+        id: "crystalCaves",
+        name: "Кристалічні печери",
+        description: "Заглушка: глибокі печери з рідкісними мінералами та високим ризиком.",
         status: "Незабаром",
         risk: "Ризик: високий",
-        imageKey: "biomeCliffs",
+        imageKey: "biomeCave",
         unlocked: false
     }
 ];
@@ -131,6 +136,10 @@ async function init() {
     renderEnergy();
     renderHealth();
     renderInventory();
+    renderJournal();
+    if (!state.journal.length) {
+        logEvent("Ви прокидаєтесь на базі виживальника.", "info");
+    }
     attachControlHandlers();
     startEnergyLoop();
     setInterval(saveGame, AUTO_SAVE_INTERVAL);
@@ -150,11 +159,13 @@ function createDefaultState() {
         resources: {
             wood: 0,
             stone: 0,
-            fiber: 0
+            fiber: 0,
+            meat: 0
         },
         craftedItems: {},
-        currentBiome: "safe",
-        discoveredBiomes: ["safe"]
+        currentBiome: "base",
+        discoveredBiomes: ["base"],
+        journal: []
     };
 }
 
@@ -198,6 +209,14 @@ function loadState() {
             base.discoveredBiomes = parsed.discoveredBiomes;
         }
 
+        if (Array.isArray(parsed.journal)) {
+            const normalized = parsed.journal
+                .map((entry) => normalizeJournalEntry(entry))
+                .filter(Boolean)
+                .slice(0, JOURNAL_ENTRY_LIMIT);
+            base.journal = normalized;
+        }
+
         return base;
     } catch (error) {
         console.warn("Не вдалося завантажити збереження:", error);
@@ -236,7 +255,20 @@ function renderGatherActions() {
     const container = document.getElementById("gatherActions");
     container.innerHTML = "";
 
-    for (const action of GATHER_ACTIONS) {
+    const available = GATHER_ACTIONS.filter((action) => action.biome === state.currentBiome);
+
+    if (!available.length) {
+        const placeholder = document.createElement("div");
+        placeholder.className = "locked-message";
+        placeholder.textContent =
+            state.currentBiome === "base"
+                ? "На базі немає активних польових дій. Вирушай до лісу за ресурсами."
+                : "Дії для цієї локації ще готуються.";
+        container.appendChild(placeholder);
+        return;
+    }
+
+    for (const action of available) {
         const card = document.createElement("article");
         card.className = "action-card";
         card.dataset.actionId = action.id;
@@ -282,6 +314,11 @@ function renderGatherActions() {
 
 function startAction(action) {
     if (runningActions.has(action.id)) {
+        return;
+    }
+
+    if (action.biome !== state.currentBiome) {
+        showActionWarning(action.id, "Дія недоступна в цьому біомі");
         return;
     }
 
@@ -339,14 +376,44 @@ function completeAction(action, card, progressBar, label, button) {
 
     progressBar.style.width = "100%";
     progressBar.setAttribute("aria-valuenow", 100);
-    label.textContent = `+${action.amount} ${RESOURCE_DEFS[action.resource].label}`;
     label.classList.remove("warning");
 
-    state.resources[action.resource] = (state.resources[action.resource] ?? 0) + action.amount;
-    renderResources();
+    const gainedResources = {};
+    let resourcesChanged = false;
+
+    if (action.resource && action.amount > 0) {
+        state.resources[action.resource] = (state.resources[action.resource] ?? 0) + action.amount;
+        gainedResources[action.resource] = (gainedResources[action.resource] ?? 0) + action.amount;
+        resourcesChanged = true;
+    }
+
+    const { events, resourcesChanged: extraResources, healthChanged, energyChanged } = applyRandomEvents(
+        action,
+        gainedResources
+    );
+
+    if (resourcesChanged || extraResources) {
+        renderResources();
+    }
+
+    if (healthChanged) {
+        renderHealth();
+    }
+
+    if (energyChanged) {
+        renderEnergy();
+    }
+
     button.disabled = false;
 
-    queueSave();
+    const rewardText = Object.keys(gainedResources).length ? formatResourceGain(gainedResources) : "Без трофеїв";
+    label.textContent = rewardText;
+
+    const baseMessage = Object.keys(gainedResources).length
+        ? `Завершено: ${action.name} — ${rewardText}.`
+        : `Завершено: ${action.name}.`;
+    logEvent(baseMessage, "info");
+    events.forEach((event) => logEvent(event.message, event.type));
 
     setTimeout(() => {
         progressBar.style.width = "0%";
@@ -370,13 +437,13 @@ function showActionWarning(actionId, message) {
 }
 
 function getTotalEnergy() {
-    return Object.values(state.energy).reduce((sum, value) => sum + value, 0);
+    return ENERGY_SEGMENT_KEYS.reduce((sum, segment) => sum + (state.energy[segment] ?? 0), 0);
 }
 
 function spendEnergy(amount) {
     let remaining = amount;
-    const order = ["fast", "medium", "slow"];
-    for (const segment of order) {
+    let spent = 0;
+    for (const segment of ENERGY_SPEND_ORDER) {
         if (remaining <= 0) {
             break;
         }
@@ -384,7 +451,9 @@ function spendEnergy(amount) {
         const used = Math.min(available, remaining);
         state.energy[segment] -= used;
         remaining -= used;
+        spent += used;
     }
+    return spent;
 }
 
 function startEnergyLoop() {
@@ -415,15 +484,38 @@ function startEnergyLoop() {
 }
 
 function renderEnergy() {
-    for (const [segment, config] of Object.entries(ENERGY_SEGMENTS)) {
-        const container = document.querySelector(`.energy-segment[data-segment="${segment}"]`);
-        if (!container) continue;
-        const fill = container.querySelector(".segment-fill");
-        const valueEl = container.querySelector(".segment-value");
-        const value = Math.round(state.energy[segment]);
-        const percentage = Math.max(0, Math.min(100, (value / config.max) * 100));
-        fill.style.width = `${percentage}%`;
-        valueEl.textContent = `${value} / ${config.max}`;
+    const totalMax = ENERGY_SEGMENT_KEYS.reduce((sum, key) => sum + ENERGY_SEGMENTS[key].max, 0);
+    const totalValue = ENERGY_SEGMENT_KEYS.reduce((sum, key) => sum + (state.energy[key] ?? 0), 0);
+    const totalElement = document.getElementById("energyTotal");
+    if (totalElement) {
+        totalElement.textContent = `${Math.round(totalValue)} / ${totalMax}`;
+    }
+
+    const track = document.querySelector(".energy-track");
+    if (track) {
+        const totalRatio = totalMax ? Math.round((totalValue / totalMax) * 100) : 0;
+        track.setAttribute("aria-valuenow", totalRatio);
+    }
+
+    for (const segment of ENERGY_SEGMENT_KEYS) {
+        const config = ENERGY_SEGMENTS[segment];
+        const container = document.querySelector(`.energy-chunk[data-segment="${segment}"]`);
+        if (container) {
+            const fill = container.querySelector(".chunk-fill");
+            if (fill) {
+                const percentage = config.max
+                    ? Math.max(0, Math.min(100, ((state.energy[segment] ?? 0) / config.max) * 100))
+                    : 0;
+                fill.style.width = `${percentage}%`;
+            }
+        }
+
+        const legendValue = document.querySelector(
+            `.energy-legend [data-segment="${segment}"] .legend-value`
+        );
+        if (legendValue) {
+            legendValue.textContent = `${Math.round(state.energy[segment] ?? 0)} / ${config.max}`;
+        }
     }
 }
 
@@ -500,18 +592,44 @@ function renderBiomes() {
 }
 
 function switchBiome(id) {
+    if (state.currentBiome === id) {
+        return;
+    }
     state.currentBiome = id;
     if (!state.discoveredBiomes.includes(id)) {
         state.discoveredBiomes.push(id);
     }
     renderBiomes();
     renderGatherActions();
-    queueSave();
+    renderCraftItems();
+    const biomeMeta = BIOMES.find((biome) => biome.id === id);
+    if (biomeMeta) {
+        logEvent(`Перехід до біому: ${biomeMeta.name}.`, "info");
+    } else {
+        queueSave();
+    }
 }
 
 function renderCraftItems() {
     const grid = document.getElementById("craftGrid");
+    const intro = document.getElementById("craftIntro");
     grid.innerHTML = "";
+
+    if (intro) {
+        intro.textContent =
+            state.currentBiome === "base"
+                ? "Будівництво станцій відбувається на базі. Вироби допоможуть у подальших експедиціях."
+                : "Щоб будувати станції, повернися на базу.";
+        intro.classList.toggle("locked", state.currentBiome !== "base");
+    }
+
+    if (state.currentBiome !== "base") {
+        const notice = document.createElement("div");
+        notice.className = "locked-message";
+        notice.textContent = "Будуйте станції на базі. Поверніться до табору, щоб продовжити крафт.";
+        grid.appendChild(notice);
+        return;
+    }
 
     for (const item of CRAFT_ITEMS) {
         const card = document.createElement("article");
@@ -570,7 +688,7 @@ function craftItem(item) {
     state.craftedItems[item.id] = (state.craftedItems[item.id] ?? 0) + 1;
     renderResources();
     renderInventory();
-    queueSave();
+    logEvent(`Побудовано станцію: ${item.name}.`, "positive");
 }
 
 function showCraftWarning(itemId, message) {
@@ -593,7 +711,7 @@ function renderInventory() {
 
     if (!Object.keys(state.craftedItems).length) {
         const empty = document.createElement("li");
-        empty.textContent = "Інструменти ще не створено.";
+        empty.textContent = "Станції ще не побудовано.";
         list.appendChild(empty);
         return;
     }
@@ -604,6 +722,200 @@ function renderInventory() {
         li.textContent = `${item ? item.name : itemId}: ${amount}`;
         list.appendChild(li);
     }
+}
+
+function formatResourceGain(resources) {
+    const entries = Object.entries(resources).filter(([, amount]) => amount > 0);
+    if (!entries.length) {
+        return "Без трофеїв";
+    }
+    return entries
+        .map(([resource, amount]) => {
+            const label = RESOURCE_DEFS[resource]?.label ?? resource;
+            return `+${Math.round(amount)} ${label}`;
+        })
+        .join(", ");
+}
+
+function applyRandomEvents(action, gainedResources) {
+    const result = {
+        events: [],
+        resourcesChanged: false,
+        healthChanged: false,
+        energyChanged: false
+    };
+
+    switch (action.id) {
+        case "forestWood": {
+            if (Math.random() < 0.25) {
+                const bonus = 2 + Math.floor(Math.random() * 3);
+                state.resources.fiber = (state.resources.fiber ?? 0) + bonus;
+                gainedResources.fiber = (gainedResources.fiber ?? 0) + bonus;
+                result.resourcesChanged = true;
+                result.events.push({
+                    message: `Між ліан знайдено ${bonus} волокна.`,
+                    type: "positive"
+                });
+            }
+
+            if (Math.random() < 0.12) {
+                const damage = 4 + Math.floor(Math.random() * 4);
+                state.health.current = clampNumber(state.health.current - damage, 0, state.health.max);
+                result.healthChanged = true;
+                result.events.push({
+                    message: `Гостра гілка подряпала руку (-${damage} здоров'я).`,
+                    type: "danger"
+                });
+            }
+            break;
+        }
+        case "forestStone": {
+            if (Math.random() < 0.24) {
+                const bonus = 2 + Math.floor(Math.random() * 2);
+                state.resources.stone = (state.resources.stone ?? 0) + bonus;
+                gainedResources.stone = (gainedResources.stone ?? 0) + bonus;
+                result.resourcesChanged = true;
+                result.events.push({
+                    message: `Знайдено жили твердого каменю: +${bonus} каменю.`,
+                    type: "positive"
+                });
+            }
+
+            if (Math.random() < 0.32) {
+                const damage = 5 + Math.floor(Math.random() * 5);
+                state.health.current = clampNumber(state.health.current - damage, 0, state.health.max);
+                result.healthChanged = true;
+                result.events.push({
+                    message: `Підслизнулися на мокрому камінні (-${damage} здоров'я).`,
+                    type: "danger"
+                });
+            }
+            break;
+        }
+        case "forestHunt": {
+            if (Math.random() < 0.35) {
+                const bonus = 1 + Math.floor(Math.random() * 2);
+                state.resources.meat = (state.resources.meat ?? 0) + bonus;
+                gainedResources.meat = (gainedResources.meat ?? 0) + bonus;
+                result.resourcesChanged = true;
+                result.events.push({
+                    message: `Трофейна здобич: додатково ${bonus} м'яса.`,
+                    type: "positive"
+                });
+            }
+
+            if (Math.random() < 0.4) {
+                const damage = 6 + Math.floor(Math.random() * 7);
+                state.health.current = clampNumber(state.health.current - damage, 0, state.health.max);
+                result.healthChanged = true;
+                result.events.push({
+                    message: `Сутичка з хижаком завдала ${damage} шкоди здоров'ю.`,
+                    type: "danger"
+                });
+            }
+
+            if (Math.random() < 0.22) {
+                const extraCost = 6 + Math.floor(Math.random() * 5);
+                const spent = spendEnergy(extraCost);
+                if (spent > 0) {
+                    result.energyChanged = true;
+                    result.events.push({
+                        message: `Виснажлива погоня забрала ще ${Math.round(spent)} енергії.`,
+                        type: "danger"
+                    });
+                }
+            }
+            break;
+        }
+        default:
+            break;
+    }
+
+    return result;
+}
+
+function logEvent(message, type = "info") {
+    const entry = {
+        message: String(message),
+        type,
+        timestamp: Date.now()
+    };
+    state.journal = [entry, ...(state.journal ?? [])].slice(0, JOURNAL_ENTRY_LIMIT);
+    renderJournal();
+    queueSave();
+}
+
+function renderJournal() {
+    const list = document.getElementById("journalList");
+    if (!list) {
+        return;
+    }
+
+    list.innerHTML = "";
+
+    if (!state.journal.length) {
+        const empty = document.createElement("li");
+        empty.className = "journal-entry info";
+        const time = document.createElement("span");
+        time.className = "journal-time";
+        time.textContent = "--:--";
+        const message = document.createElement("span");
+        message.className = "journal-message";
+        message.textContent = "Журнал поки порожній. Виконай дію, щоб побачити звіт.";
+        empty.appendChild(time);
+        empty.appendChild(message);
+        list.appendChild(empty);
+        return;
+    }
+
+    for (const entry of state.journal) {
+        const li = document.createElement("li");
+        li.className = `journal-entry ${entry.type ?? "info"}`;
+        const time = document.createElement("span");
+        time.className = "journal-time";
+        time.textContent = formatJournalTime(entry.timestamp);
+        const message = document.createElement("span");
+        message.className = "journal-message";
+        message.textContent = entry.message;
+        li.append(time, message);
+        list.appendChild(li);
+    }
+}
+
+function formatJournalTime(timestamp) {
+    if (!timestamp) {
+        return "--:--";
+    }
+
+    const date = new Date(typeof timestamp === "number" ? timestamp : Date.parse(timestamp));
+    if (Number.isNaN(date.getTime())) {
+        return "--:--";
+    }
+
+    return date.toLocaleTimeString("uk-UA", { hour: "2-digit", minute: "2-digit" });
+}
+
+function normalizeJournalEntry(entry) {
+    if (!entry || typeof entry !== "object") {
+        return null;
+    }
+
+    if (typeof entry.message !== "string") {
+        return null;
+    }
+
+    const type = typeof entry.type === "string" ? entry.type : "info";
+    let timestamp = Date.now();
+    if (typeof entry.timestamp === "number") {
+        timestamp = entry.timestamp;
+    } else if (typeof entry.timestamp === "string") {
+        const parsed = Date.parse(entry.timestamp);
+        if (!Number.isNaN(parsed)) {
+            timestamp = parsed;
+        }
+    }
+
+    return { message: entry.message, type, timestamp };
 }
 
 function attachControlHandlers() {
@@ -625,7 +937,9 @@ function attachControlHandlers() {
         renderEnergy();
         renderHealth();
         renderInventory();
+        renderJournal();
         showTemporaryToast("Гру скинуто до початкового стану.");
+        logEvent("База очищена: прогрес починається знову.", "info");
     });
 }
 

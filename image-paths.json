@@ -1,22 +1,23 @@
 {
   "gather": {
-    "gatherWood": "https://placehold.co/400x240?text=Wood",
-    "gatherStone": "https://placehold.co/400x240?text=Stone",
-    "gatherFiber": "https://placehold.co/400x240?text=Fiber"
+    "forestWood": "https://placehold.co/400x240?text=Forest+Wood",
+    "forestStone": "https://placehold.co/400x240?text=Forest+Stone",
+    "forestHunt": "https://placehold.co/400x240?text=Hunt"
   },
   "craft": {
-    "woodenClub": "https://placehold.co/160x160?text=Club",
-    "stoneHatchet": "https://placehold.co/160x160?text=Hatchet",
-    "fiberSling": "https://placehold.co/160x160?text=Sling"
+    "campfireStation": "https://placehold.co/160x160?text=Campfire",
+    "carpenterBench": "https://placehold.co/160x160?text=Workshop",
+    "hunterRack": "https://placehold.co/160x160?text=Hunter+Rack"
   },
   "biomes": {
-    "biomeSafe": "https://placehold.co/400x240?text=Safe+Valley",
+    "biomeBase": "https://placehold.co/400x240?text=Base",
     "biomeForest": "https://placehold.co/400x240?text=Misty+Forest",
-    "biomeCliffs": "https://placehold.co/400x240?text=Basalt+Cliffs"
+    "biomeCave": "https://placehold.co/400x240?text=Crystal+Cave"
   },
   "resources": {
     "woodResource": "https://placehold.co/160x160?text=Wood",
     "stoneResource": "https://placehold.co/160x160?text=Stone",
-    "fiberResource": "https://placehold.co/160x160?text=Fiber"
+    "fiberResource": "https://placehold.co/160x160?text=Fiber",
+    "meatResource": "https://placehold.co/160x160?text=Meat"
   }
 }
