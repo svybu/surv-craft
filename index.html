@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Surv-Craft Idle Prototype</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Russo+One&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet" />
+</head>
+<body>
+    <header class="app-header">
+        <div class="title-block">
+            <h1>Surv-Craft</h1>
+            <p class="subtitle">Ранній прототип частково idle гри про виживання</p>
+        </div>
+        <div class="save-controls">
+            <button id="saveGame" class="ghost-button">Зберегти</button>
+            <button id="resetGame" class="ghost-button danger">Скинути збереження</button>
+        </div>
+    </header>
+
+    <main class="layout">
+        <section class="panel stats-panel">
+            <h2>Стан персонажа</h2>
+            <div class="stat-block">
+                <span class="stat-label">Здоров'я</span>
+                <div class="progress-track small" aria-label="Здоров'я">
+                    <div id="healthBar" class="progress-bar health"></div>
+                </div>
+                <span id="healthValue" class="stat-value">100 / 100</span>
+            </div>
+            <div class="stat-block energy-block">
+                <div class="stat-label">Енергія</div>
+                <div class="energy-bar" aria-label="Сегменти енергії">
+                    <div class="energy-segment slow" data-segment="slow">
+                        <span class="segment-label">Повільне відновлення</span>
+                        <div class="segment-track">
+                            <div class="segment-fill"></div>
+                        </div>
+                        <span class="segment-value">0 / 0</span>
+                    </div>
+                    <div class="energy-segment medium" data-segment="medium">
+                        <span class="segment-label">Середнє відновлення</span>
+                        <div class="segment-track">
+                            <div class="segment-fill"></div>
+                        </div>
+                        <span class="segment-value">0 / 0</span>
+                    </div>
+                    <div class="energy-segment fast" data-segment="fast">
+                        <span class="segment-label">Швидке відновлення</span>
+                        <div class="segment-track">
+                            <div class="segment-fill"></div>
+                        </div>
+                        <span class="segment-value">0 / 0</span>
+                    </div>
+                </div>
+                <p class="energy-hint">Витрати енергії спочатку використовують швидкий сегмент, потім середній та повільний.</p>
+            </div>
+        </section>
+
+        <section class="panel actions-panel">
+            <h2>Збір ресурсів</h2>
+            <p class="panel-intro">Обирай дію, витрачай енергію та чекай на завершення прогрес-бару.</p>
+            <div class="action-grid" id="gatherActions">
+                <!-- Карти дій додаються скриптом -->
+            </div>
+        </section>
+
+        <section class="panel resources-panel">
+            <h2>Ресурси</h2>
+            <ul id="resourceList" class="resource-list">
+                <!-- Заповнюється скриптом -->
+            </ul>
+        </section>
+
+        <section class="panel biome-panel">
+            <h2>Біоми</h2>
+            <p class="panel-intro">Поки доступна лише стартова зона. Інші біоми - заглушки для майбутніх розділів.</p>
+            <div class="biome-grid" id="biomeGrid">
+                <!-- Біоми додаються скриптом -->
+            </div>
+        </section>
+
+        <section class="panel craft-panel">
+            <h2>Базовий крафт</h2>
+            <p class="panel-intro">Створи інструменти з дерева, каменю та волокон, щоб отримувати більше ресурсів у майбутньому.</p>
+            <div class="craft-grid" id="craftGrid">
+                <!-- Список предметів додається скриптом -->
+            </div>
+            <div class="inventory" id="inventory">
+                <h3>Інвентар інструментів</h3>
+                <ul class="inventory-list" id="inventoryList">
+                    <!-- Заповнюється скриптом -->
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer class="app-footer">
+        <p>Прототип для тестів. Автозбереження виконується кожні 30 секунд.</p>
+    </footer>
+
+    <script src="script.js" type="module"></script>
+</body>
+</html>
