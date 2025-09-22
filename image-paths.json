@@ -5,6 +5,8 @@
     "forestHunt": "https://placehold.co/400x240?text=Hunt"
   },
   "craft": {
+    "primitiveWorkbench": "https://placehold.co/160x160?text=Primitive+Workbench",
+    "primitiveFirepit": "https://placehold.co/160x160?text=Primitive+Firepit",
     "campfireStation": "https://placehold.co/160x160?text=Campfire",
     "carpenterBench": "https://placehold.co/160x160?text=Workshop",
     "hunterRack": "https://placehold.co/160x160?text=Hunter+Rack"
